@@ -1,0 +1,51 @@
+Objective: Create a Streamlit dashboard to monitor specific AWS Athena databases, with a focus on visualizing the results of ETL (Extract, Transform, Load) processes. This dashboard aims to provide real-time insights into the health and status of these databases by displaying key metrics and logs.
+
+Context and Definitions:
+
+Staging Database: A temporary holding area within AWS Athena where data is initially loaded during the ETL process. This database contains a "log" table that records the progress and details of the ETL tasks.
+Production Database: The final production database which contains SCD2 versioning.
+Log Table: A table within the staging database designed to track ETL activities. It includes columns for the overall ETL run timestamp (etl_run_datetime), timestamps for specific log events, the name of the processed file, and the corresponding table that the file data was loaded into.
+
+Dashboard Features:
+
+Database Selection:
+Include a dropdown menu for users to choose from a predefined list of databases to monitor. These databases are listed in a configuration file within the databases/ directory of the project repository.
+Depending on the database config file, different checks are run for each database. These are found in the metrics folder, and are either boolean checks, integer counts, or tables.
+
+ETL Process Monitoring:
+Display the timestamp of the last ETL run for the selected database, obtained from the etl_run_datetime column in the log table. This timestamp indicates when the ETL process was last executed.
+
+Activity Logs:
+Show a list of raw files processed during the latest ETL run, as recorded in the log table. This helps in tracking the data files ingested into the database.
+
+Data Integrity Checks:
+Dynamically query the Athena database to assess the uniqueness of new primary keys added during the last ETL cycle. This is crucial for maintaining data consistency and avoiding duplicates.
+
+Error Handling and Reporting:
+Clearly highlight any failures or exceptions that occurred during the ETL processes, as documented in the log table. This includes a binary check to immediately flag if any errors are present, ensuring quick identification and resolution.
+
+Table-Level Metrics:
+Provide additional dropdown menus for selecting individual tables within the chosen database to view specific metrics, such as the number of new primary keys added. This allows for granular monitoring at the table level.
+
+Technical Requirements:
+Use the pydbtools package for executing SQL queries against Athena databases. The function pydb_tools.read_sql_query("<sql query>") will be used to retrieve data, returning the results as pandas dataframes for further processing and visualization in the dashboard.
+
+Sandbox Requirements:
+While developing locally, this application should make use of mock_data in the mock_data folder. These tables should be included in the databases config, and queried via SQL.
+
+Repository Structure:
+metrics/: Contains scripts for generating data counts, plots, and other statistical analyses.
+checks/: Includes code for performing data integrity checks, error reporting, and monitoring the status of ETL runs.
+app/: Holds the Streamlit dashboard application code, responsible for UI rendering and user interactions.
+databases/: Stores configuration files that define which databases and tables are available for monitoring, along with their associated metrics and checks.
+mock_data/: Contains scripts used to generate mock data, as well as CSV files for an example staging database, and logs file.
+
+Implementation Considerations:
+Ensure the dashboard is scalable to support additional databases and tables as they are added to the monitoring configuration.
+Design the user interface to be intuitive and informative, providing clear indicators for data updates, integrity issues, and processing errors.
+Ensure the dashboard can be hosted locally, to display data from local mock data.
+
+The only file that should be changed is streamlit_app.py, which does not work properly. It should do the following:
+- create a drop down menu to select which database, these databases appear in database config
+- display a heading for each metric type. Checks, counts, and tables.
+- under each heading, the outputs of that metric should be displayed if they appear for that database in the config file.

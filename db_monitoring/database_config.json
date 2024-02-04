@@ -1,0 +1,25 @@
+{
+    "local_data": {
+        "staging_database": {
+            "table": {
+                "checks": [
+                    "check_primary_key_uniqueness"
+                ],
+                "counts": [
+                    "get_new_primary_keys_count"
+                ],
+                "plots": [
+                    "display_bar_chart_data_column1",
+                    "display_bar_chart_data_snapshot",
+                    "display_scatter_plot_example"
+                ]
+            },
+            "logs": {
+                "tables": [
+                    "display_recent_failures"
+                ]
+            }
+        }
+    },
+    "aws_data": {}
+}
