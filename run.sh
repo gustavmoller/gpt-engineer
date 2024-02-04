@@ -3,10 +3,9 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# Generate mock data if in local development mode
-if [ "$1" == "local" ]; then
-    python mock_data/generate_mock_data.py
-fi
+# Generate mock data
+python mock_data/generate_mock_data.py
+
 
 # Run the Streamlit application
 streamlit run streamlit_app.py &
