@@ -12,7 +12,7 @@ with open("database_config.json") as config_file:
     database_tables = config["local_data"]
 
 # Streamlit UI components
-st.title("AWS Athena Monitoring Dashboard")
+st.title("Athena Database Monitoring Dashboard")
 
 # Database selection dropdown
 selected_database = st.selectbox("Select a database:", list(database_tables.keys()))

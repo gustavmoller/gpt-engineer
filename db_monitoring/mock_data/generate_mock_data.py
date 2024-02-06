@@ -98,6 +98,10 @@ df_snapshot_b = merge_delta(df_a, df_delta_b)
 df_delta_c = produce_delta(df_snapshot_b, "FileC", 2024, 2)
 df_snapshot_c = merge_delta(df_snapshot_b, df_delta_c)
 
+print(df_a)
+print(df_delta_b)
+print(df_snapshot_b)
+
 # To produce our simple staging database, we union df_a, with df_delta_b, and df_delta_c
 staging_database = pd.concat([df_a, df_delta_b, df_delta_c], ignore_index=True)
 

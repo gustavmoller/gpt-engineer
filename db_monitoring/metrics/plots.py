@@ -40,7 +40,7 @@ def display_bar_chart_data_snapshot(database: str, table: str):
 def display_scatter_plot(
     database: str, table: str, column1: str, column2: str, column3: str
 ):
-    # Your SQL query function
+    # Assuming sql_query is a function that returns a DataFrame based on a SQL query
     df = sql_query(
         f"SELECT {column1}, {column2}, {column3} FROM {database}.{table}",
         database,
@@ -50,21 +50,25 @@ def display_scatter_plot(
     # Ensure column3 is a datetime type
     df[column3] = pd.to_datetime(df[column3])
 
-    # Sort DataFrame by the date to ensure the legend matches the color
+    # Sort DataFrame by the date to ensure the legend matches the color gradient
     df.sort_values(by=column3, inplace=True)
+
+    # Convert dates to numbers for coloring
+    date_num = mdates.date2num(df[column3])
+
+    # Normalize the date_num array for color mapping
+    norm = plt.Normalize(date_num.min(), date_num.max())
 
     # Create a scatter plot using matplotlib
     fig, ax = plt.subplots(figsize=(10, 6))  # Larger figure size
     scatter = ax.scatter(
-        df[column1], df[column2], c=mdates.date2num(df[column3]), cmap="viridis"
+        df[column1], df[column2], c=date_num, cmap="viridis", norm=norm
     )
 
-    # Create colorbar as legend
-    colorbar = fig.colorbar(scatter, ax=ax)
-    colorbar.ax.yaxis_date()  # Ensure that the format is interpreted as dates
-    colorbar.ax.yaxis.set_major_formatter(
-        mdates.DateFormatter("%Y-%m-%d")
-    )  # Set date format
+    # Create colorbar as legend, manually handling date formatting
+    cbar = fig.colorbar(scatter, ax=ax)
+    cbar.ax.yaxis.set_major_locator(mdates.AutoDateLocator())
+    cbar.ax.yaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
     # Set labels with improved font sizes
     ax.set_xlabel(column1, fontsize=12)
