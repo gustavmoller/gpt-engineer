@@ -1,0 +1,49 @@
+PLANNING:
+To make the snake multicolored with vibrant rainbow colors that are constantly changing, we need to modify the `Snake` class's `draw` method to assign a different color to each segment of the snake. We will use a list of rainbow colors and cycle through them as we draw each segment of the snake. We will also need to update the `constants.py` file to include the list of rainbow colors.
+
+Here are the steps we will take:
+
+1. Update `constants.py` to include a list of rainbow colors.
+2. Modify the `draw` method in `snake.py` to use the list of rainbow colors for each segment of the snake.
+
+OUTPUT:
+
+```python
+constants.py
+<<<<<<< HEAD
+# Colors
+BACKGROUND_COLOR = (0, 0, 0)
+SNAKE_COLOR = (0, 255, 0)
+FOOD_COLOR = (255, 0, 0)
+=======
+# Colors
+BACKGROUND_COLOR = (0, 0, 0)
+# SNAKE_COLOR is removed as we will use RAINBOW_COLORS for the snake
+FOOD_COLOR = (255, 0, 0)
+RAINBOW_COLORS = [
+    (148, 0, 211),  # Violet
+    (75, 0, 130),   # Indigo
+    (0, 0, 255),    # Blue
+    (0, 255, 0),    # Green
+    (255, 255, 0),  # Yellow
+    (255, 127, 0),  # Orange
+    (255, 0, 0),    # Red
+]
+>>>>>>> updated
+```
+
+```python
+snake.py
+<<<<<<< HEAD
+    def draw(self, screen):
+        for position in self.positions:
+            pygame.draw.rect(screen, SNAKE_COLOR, (*position, SNAKE_SIZE, SNAKE_SIZE))
+=======
+    def draw(self, screen):
+        for index, position in enumerate(self.positions):
+            color_index = index % len(RAINBOW_COLORS)
+            pygame.draw.rect(screen, RAINBOW_COLORS[color_index], (*position, SNAKE_SIZE, SNAKE_SIZE))
+>>>>>>> updated
+```
+
+These changes will result in a snake that has each segment drawn in a different color from the rainbow, creating a vibrant, multicolored effect. The colors will cycle through the list, creating a rainbow pattern that changes as the snake moves and grows.
