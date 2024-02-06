@@ -1,3 +1,1 @@
-Snake game in the browser.
-Use a python backend with MVC components.
-Please implement also the html and js neccessary to run the game with only the code.
+We are writing snake in python. MVC components split in separate files. Keyboard control.
