@@ -3,9 +3,10 @@
 ### Setup
 
 1. Set Python interpreter to `3.9.16`
-2. Activate venv: `source venv/bin/activate`
-3. Install packages: `pip install -r requirements.txt`
-4. Save GPT4 API key in `.env` file
+2. Create venv: `python3 -m venv venv`
+3. Activate venv: `source venv/bin/activate`
+4. Install packages: `pip install -r requirements.txt`
+5. Save GPT4 API key in `.env` file
 
 ### Create new code, or improve existing code
 
